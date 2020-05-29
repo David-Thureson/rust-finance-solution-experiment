@@ -131,6 +131,51 @@ fn financial_arithmetic_basics() {
     dbg!(pv_98_days);
     assert_approx_equal!(p, pv_98_days);
 
+    let pv = 100.0;
+    let fv = 120.0;
+    let days = 90;
+    let yld = yield_days(days, pv, fv);
+    dbg!(yld);
+    let eff_yld = effective_yield_days(days, pv, fv);
+    dbg!(eff_yld);
+
+    // Long-term investments
+
+    // Example 1.7
+
+    println!();
+    let fv = finance_solution::future_value(0.08, 5, -120, false);
+    dbg!(fv);
+    assert_rounded_2(176.32, fv);
+
+    // Example 1.8
+
+    println!();
+    let fv = future_value_days(0.08, 92, 120.0);
+    dbg!(fv);
+    assert_rounded_2(122.42, fv);
+
+    // Example 1.9
+
+    println!();
+    let pv = finance_solution::present_value(0.07, 4, -270, false);
+    dbg!(pv);
+    assert_rounded_2(205.98, pv);
+
+    // Example 1.10
+
+    println!();
+    let pv = present_value_days(0.07, 180, 270.0);
+    dbg!(pv);
+    assert_rounded_2(260.99, pv);
+
+    // Example 1.11
+
+    println!();
+    let yld = yield_days(64, 138.0, 139.58);
+    dbg!(yld);
+    assert_rounded_4(0.0653, yld);
+
 }
 
 fn proceeds_of_short_term_investment(p: f64, i: f64, days: u32) -> f64 {
@@ -231,12 +276,12 @@ fn present_value_days(i: f64, days: u32, p: f64) -> f64 {
     p / (1.0 + (i * (days / DAYS_IN_YEAR)))
 }
 
-fn yield_days(i: f64, days: u32, pv: f64, fv: f64) -> f64 {
+fn yield_days(days: u32, pv: f64, fv: f64) -> f64 {
     let days = days as f64;
     ((fv / pv) - 1.0) * (DAYS_IN_YEAR / days)
 }
 
-fn effective_yield_days(i: f64, days: u32, pv: f64, fv: f64) -> f64 {
+fn effective_yield_days(days: u32, pv: f64, fv: f64) -> f64 {
     let days = days as f64;
     (fv / pv).powf(DAYS_IN_YEAR / days) - 1.0
 }
