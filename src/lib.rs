@@ -1,10 +1,10 @@
 extern crate finance_solution;
 
-pub mod cashflow;
+pub mod academic;
+pub mod core;
 pub mod npv;
 pub mod problems;
 pub mod simple;
-pub mod tvm;
 
 pub fn initialized_vector<L, V>(length: L, value: V) -> Vec<V>
     where

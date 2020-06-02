@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 
 use crate::*;
-use finance_solution::*;
+use finance_solution::core::*;
 use std::mem;
 
 pub fn main() {

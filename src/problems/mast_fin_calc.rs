@@ -4,11 +4,11 @@
 #![allow(dead_code)]
 #![allow(unused_imports)]
 
+use finance_solution::convert_rate;
+use finance_solution::core;
 use finance_solution::assert_approx_equal;
 use finance_solution::assert_rounded_2;
 use finance_solution::assert_rounded_4;
-use finance_solution::assert_rounded_6;
-use finance_solution::assert_rounded_8;
 
 const DAYS_IN_YEAR: f64 = 365_f64;
 
@@ -43,9 +43,9 @@ fn financial_arithmetic_basics() {
     // Nominal rates and effective rates
 
     println!();
-    let fv = finance_solution::future_value(0.025, 4, -1, false);
+    let fv = core::future_value(0.025, 4, -1, false);
     dbg!(fv);
-    assert_rounded_4(1.1038, fv);
+    assert_rounded_4!(1.1038, fv);
 
     // Example 1.1
 
@@ -54,9 +54,9 @@ fn financial_arithmetic_basics() {
     let n = 4;
     let rate_effective = effective_rate(rate_nominal, n);
     dbg!(rate_effective);
-    assert_rounded_4(0.0824, rate_effective);
+    assert_rounded_4!(0.0824, rate_effective);
 
-    let rate_effective_crate = finance_solution::convert_apr_to_ear(rate_nominal, n);
+    let rate_effective_crate = convert_rate::convert_apr_to_ear(rate_nominal, n);
     dbg!(rate_effective_crate);
     assert_approx_equal!(rate_effective, rate_effective_crate);
 
@@ -64,7 +64,7 @@ fn financial_arithmetic_basics() {
     dbg!(rate_nominal_round_trip);
     assert_approx_equal!(rate_nominal, rate_nominal_round_trip);
 
-    let rate_nominal_crate = finance_solution::convert_ear_to_apr(rate_effective, n);
+    let rate_nominal_crate = convert_rate::convert_ear_to_apr(rate_effective, n);
     dbg!(rate_nominal_crate);
     assert_approx_equal!(rate_nominal, rate_nominal_crate);
 
@@ -73,35 +73,35 @@ fn financial_arithmetic_basics() {
     println!();
     let quarterly_equivalent = nominal_rate(0.05, 4);
     dbg!(quarterly_equivalent);
-    assert_rounded_4(0.0491, quarterly_equivalent);
+    assert_rounded_4!(0.0491, quarterly_equivalent);
 
     // Example 1.3
 
     println!();
     let effective_rate_153_days = effective_rate_days(0.102, 153);
     dbg!(effective_rate_153_days);
-    assert_rounded_4(0.1050, effective_rate_153_days);
+    assert_rounded_4!(0.1050, effective_rate_153_days);
 
     // Continuous compounding
 
     println!();
     let continuous = effective_to_continuous_rate(0.093);
     dbg!(continuous);
-    assert_rounded_4(0.0889, continuous);
+    assert_rounded_4!(0.0889, continuous);
 
     // Example 1.4
 
     println!();
     let continuous_for_91_days = effective_to_continuous_rate_days(0.064, 91);
     dbg!(continuous_for_91_days);
-    assert_rounded_4(0.0635, continuous_for_91_days);
+    assert_rounded_4!(0.0635, continuous_for_91_days);
 
     // Example 1.5
 
     println!();
     let effective = continuous_to_effective_rate(0.072);
     dbg!(effective);
-    assert_rounded_4(0.0747, effective);
+    assert_rounded_4!(0.0747, effective);
 
     // Reinvestment rates
 
@@ -110,7 +110,7 @@ fn financial_arithmetic_basics() {
     println!();
     let total_return = future_value_reinvested_to_end(&[0.035, 0.04, 0.05], 100.0);
     dbg!(total_return);
-    assert_rounded_2(110.96, total_return);
+    assert_rounded_2!(110.96, total_return);
 
     // NOMINAL AND EFFECTIVE RATES
 
@@ -125,7 +125,7 @@ fn financial_arithmetic_basics() {
     let days = 98;
     let fv_98_days = future_value_days(i, days, p);
     dbg!(fv_98_days);
-    assert_rounded_2(102.68, fv_98_days);
+    assert_rounded_2!(102.68, fv_98_days);
 
     let pv_98_days = present_value_days(i, days, fv_98_days);
     dbg!(pv_98_days);
@@ -144,37 +144,37 @@ fn financial_arithmetic_basics() {
     // Example 1.7
 
     println!();
-    let fv = finance_solution::future_value(0.08, 5, -120, false);
+    let fv = core::future_value(0.08, 5, -120, false);
     dbg!(fv);
-    assert_rounded_2(176.32, fv);
+    assert_rounded_2!(176.32, fv);
 
     // Example 1.8
 
     println!();
     let fv = future_value_days(0.08, 92, 120.0);
     dbg!(fv);
-    assert_rounded_2(122.42, fv);
+    assert_rounded_2!(122.42, fv);
 
     // Example 1.9
 
     println!();
-    let pv = finance_solution::present_value(0.07, 4, -270, false);
+    let pv = core::present_value(0.07, 4, -270, false);
     dbg!(pv);
-    assert_rounded_2(205.98, pv);
+    assert_rounded_2!(205.98, pv);
 
     // Example 1.10
 
     println!();
     let pv = present_value_days(0.07, 180, 270.0);
     dbg!(pv);
-    assert_rounded_2(260.99, pv);
+    assert_rounded_2!(260.99, pv);
 
     // Example 1.11
 
     println!();
     let yld = yield_days(64, 138.0, 139.58);
     dbg!(yld);
-    assert_rounded_4(0.0653, yld);
+    assert_rounded_4!(0.0653, yld);
 
 }
 
